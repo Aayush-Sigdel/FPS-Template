@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://by4thiq6x7aqd"]
+
+[ext_resource type="PackedScene" uid="uid://crhmet3kdsv4n" path="res://scene/character_body_3d.tscn" id="1_02wdi"]
+[ext_resource type="PackedScene" uid="uid://cprm8shn1ecav" path="res://level/test.tscn" id="1_642wg"]
+[ext_resource type="PackedScene" uid="uid://b5hhdolnwresq" path="res://environment/environment.tscn" id="1_kebm2"]
+[ext_resource type="PackedScene" uid="uid://c4sb7dyfetsgl" path="res://level/testTerrain.tscn" id="3_uj8kr"]
+
+[node name="main" type="Node3D"]
+
+[node name="Test" parent="." instance=ExtResource("1_642wg")]
+transform = Transform3D(5.5, 0, 0, 0, 5.5, 0, 0, 0, 5.5, -1.37287, 20.3555, 0.400165)
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("1_02wdi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 66.1401, 0)
+
+[node name="Environment" parent="." instance=ExtResource("1_kebm2")]
+
+[node name="terrain" parent="." instance=ExtResource("3_uj8kr")]

@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Weapons_resources" load_steps=3 format=3 uid="uid://d4l7rgud4xe35"]
+
+[ext_resource type="Script" path="res://Resource/weapons/weapon_resources.gd" id="1_glyg8"]
+[ext_resource type="ArrayMesh" uid="uid://dxkbanlrmwk0" path="res://materials/weapons/M4a1/m4a1_mesh.tres" id="2_bkmac"]
+
+[resource]
+script = ExtResource("1_glyg8")
+Weapon_name = "m4a1"
+Current_ammo = 45
+Reserver_ammo = 180
+Magazine = 45
+Max_ammo = 180
+Auto_fire = true
+mesh = ExtResource("2_bkmac")
+weapon_position = Vector3(0.412111, -0.17147, -1.51618)
+weapon_rotation = Vector3(-4.1, 166.1, 1)
+Swaymin = Vector2(-20, -20)
+Swaymax = Vector2(20, 20)
+SwaySpeedPosition = 0.07
+SwaySpeedRotation = 0.1
+SwayAmountPosition = 0.1
+SwayAmountRotation = 30.0

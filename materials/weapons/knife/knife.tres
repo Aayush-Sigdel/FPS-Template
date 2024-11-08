@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Weapons_resources" load_steps=3 format=3 uid="uid://clr4as8pmwtk0"]
+
+[ext_resource type="Script" path="res://Resource/weapons/weapon_resources.gd" id="1_f37my"]
+[ext_resource type="ArrayMesh" uid="uid://dok2q8qo0t22h" path="res://materials/weapons/knife/knife_mesh.tres" id="1_mtqn5"]
+
+[resource]
+script = ExtResource("1_f37my")
+Weapon_name = "knife"
+Current_ammo = 1
+Reserver_ammo = 1
+Magazine = 1
+Max_ammo = 1
+Auto_fire = false
+mesh = ExtResource("1_mtqn5")
+weapon_position = Vector3(0.180731, -0.0361833, -0.566322)
+weapon_rotation = Vector3(-0.487821, -0.039693, 0.382393)
+Swaymin = Vector2(-20, -20)
+Swaymax = Vector2(20, 20)
+SwaySpeedPosition = 0.07
+SwaySpeedRotation = 0.1
+SwayAmountPosition = 0.1
+SwayAmountRotation = 30.0
