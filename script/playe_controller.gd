@@ -6,6 +6,10 @@ class_name Player  extends CharacterBody3D
 @onready var camera_3d: Camera3D = $arm/Camera3D
 @onready var weapon_camera: Camera3D = $arm/Camera3D/SubViewportContainer/SubViewport/weaponCamera
 
+@onready var weapon: Node3D = $arm/Camera3D/SubViewportContainer/SubViewport/weaponCamera/Weapon
+
+@onready var weapon_mesh: MeshInstance3D = $Weapon/Weapon_mesh
+
 
 var _mouse_input : bool = false
 var _rotation_input : float
@@ -53,7 +57,8 @@ func _unhandled_input(event: InputEvent) -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("exit"):
 		get_tree().quit()
-
+	if event is InputEventMouseMotion:
+		weapon.SwayWeapon(Vector2(event.relative.x,event.relative.y))
 	
 func _physics_process(delta: float) -> void:
 	weapon_camera.global_transform = camera_3d.global_transform 

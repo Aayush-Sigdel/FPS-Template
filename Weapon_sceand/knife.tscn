@@ -1,6 +1,6 @@
 [gd_scene load_steps=58 format=4 uid="uid://dtxgqggjh1t4v"]
 
-[ext_resource type="Material" uid="uid://b8u2xilgen5be" path="res://Resource/weapons/Weapon_texture.tres" id="1_vf84k"]
+[ext_resource type="Material" uid="uid://b8u2xilgen5be" path="res://Resource/weaponsResources/Weapon_texture.tres" id="1_vf84k"]
 [ext_resource type="Material" uid="uid://byx4vxopogblr" path="res://Resource/handtextuyre/hand.tres" id="2_i2kxm"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_qtqa1"]

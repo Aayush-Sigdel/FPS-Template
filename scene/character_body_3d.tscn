@@ -1,18 +1,21 @@
-[gd_scene load_steps=26 format=3 uid="uid://crhmet3kdsv4n"]
+[gd_scene load_steps=32 format=3 uid="uid://crhmet3kdsv4n"]
 
 [ext_resource type="Script" path="res://script/playe_controller.gd" id="1_pjymv"]
+[ext_resource type="Script" path="res://script/Iniciate_Weapon.gd" id="2_3jjlt"]
 [ext_resource type="Script" path="res://script/Retical.gd" id="2_8igmx"]
-[ext_resource type="PackedScene" uid="uid://cg6bfup1clt3o" path="res://scene/weapon_camera.tscn" id="2_8kyjh"]
 [ext_resource type="Theme" uid="uid://vhvelkdbyvym" path="res://environment/UI/Debug.tres" id="3_33ndc"]
-[ext_resource type="Script" path="res://statemachine/state_machine.gd" id="3_eyfo1"]
-[ext_resource type="Script" path="res://statemachine/idel_player_state.gd" id="4_edxut"]
+[ext_resource type="Script" path="res://script/statemachine/state_machine.gd" id="3_eyfo1"]
+[ext_resource type="Resource" uid="uid://co3005f67y74d" path="res://materials/weapons/G15/g15.tres" id="3_uy568"]
+[ext_resource type="ArrayMesh" uid="uid://c5mi0vscgmrc2" path="res://materials/weapons/G15/g15handrig.tres" id="4_6j0rx"]
+[ext_resource type="Script" path="res://script/statemachine/idel_player_state.gd" id="4_edxut"]
 [ext_resource type="Script" path="res://script/debug_panal.gd" id="4_w1ep5"]
-[ext_resource type="Script" path="res://statemachine/walking_player_state.gd" id="5_04nna"]
-[ext_resource type="Script" path="res://statemachine/Sprint_player_state.gd" id="8_jc00j"]
-[ext_resource type="Script" path="res://statemachine/crouch_player_state.gd" id="9_p2a1m"]
-[ext_resource type="Script" path="res://statemachine/sliding_player_state.gd" id="10_cik1r"]
-[ext_resource type="Script" path="res://statemachine/jump_player_state.gd" id="11_7ynut"]
-[ext_resource type="Script" path="res://statemachine/falling_player_state.gd" id="12_d682v"]
+[ext_resource type="Script" path="res://script/statemachine/walking_player_state.gd" id="5_04nna"]
+[ext_resource type="Texture2D" uid="uid://cxe0tsfx2marx" path="res://Assets/kloofendal_48d_partly_cloudy_puresky_4k.exr" id="5_axmn6"]
+[ext_resource type="Script" path="res://script/statemachine/Sprint_player_state.gd" id="8_jc00j"]
+[ext_resource type="Script" path="res://script/statemachine/crouch_player_state.gd" id="9_p2a1m"]
+[ext_resource type="Script" path="res://script/statemachine/sliding_player_state.gd" id="10_cik1r"]
+[ext_resource type="Script" path="res://script/statemachine/jump_player_state.gd" id="11_7ynut"]
+[ext_resource type="Script" path="res://script/statemachine/falling_player_state.gd" id="12_d682v"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ffit4"]
 
@@ -21,6 +24,22 @@ albedo_color = Color(0.188971, 0.160084, 0.0714628, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_wmglb"]
 material = SubResource("StandardMaterial3D_7olrs")
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_20jon"]
+panorama = ExtResource("5_axmn6")
+
+[sub_resource type="Sky" id="Sky_0uyn8"]
+sky_material = SubResource("PanoramaSkyMaterial_20jon")
+process_mode = 3
+radiance_size = 6
+
+[sub_resource type="Environment" id="Environment_enmnn"]
+background_mode = 2
+sky = SubResource("Sky_0uyn8")
+ambient_light_source = 3
+reflected_light_source = 2
+tonemap_mode = 3
+sdfgi_use_occlusion = true
 
 [sub_resource type="Animation" id="Animation_0lqrf"]
 length = 0.001
@@ -549,14 +568,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_ffit4")
 
 [node name="placeholder" type="MeshInstance3D" parent="CollisionShape3D"]
+visible = false
 layers = 0
 mesh = SubResource("CapsuleMesh_wmglb")
 skeleton = NodePath("../..")
 
 [node name="arm" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.80576, -0.261326)
+visible = false
 
 [node name="Camera3D" type="Camera3D" parent="arm"]
+visible = false
 cull_mask = 1048573
 
 [node name="weapon rig" type="Node3D" parent="arm/Camera3D"]
@@ -575,8 +597,21 @@ handle_input_locally = false
 size_2d_override_stretch = true
 render_target_update_mode = 4
 
-[node name="weaponCamera" parent="arm/Camera3D/SubViewportContainer/SubViewport" instance=ExtResource("2_8kyjh")]
-cull_mask = 2
+[node name="weaponCamera" type="Camera3D" parent="arm/Camera3D/SubViewportContainer/SubViewport"]
+transform = Transform3D(1.08712, 0, 0, 0, 1.08712, 0, 0, 0, 1.08712, 0, 0, 0)
+fov = 25.0
+
+[node name="Weapon" type="Node3D" parent="arm/Camera3D/SubViewportContainer/SubViewport/weaponCamera" groups=["weapon"]]
+transform = Transform3D(-0.152962, -0.054273, 0.98674, 0.109453, 0.991417, 0.0714974, -0.982152, 0.118939, -0.145709, 0.412111, -0.17147, -1.51618)
+script = ExtResource("2_3jjlt")
+Weapon_type = ExtResource("3_uy568")
+
+[node name="Weapon_mesh" type="MeshInstance3D" parent="arm/Camera3D/SubViewportContainer/SubViewport/weaponCamera/Weapon" groups=["weapon"]]
+layers = 3
+mesh = ExtResource("4_6j0rx")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="arm/Camera3D/SubViewportContainer/SubViewport/weaponCamera"]
+environment = SubResource("Environment_enmnn")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

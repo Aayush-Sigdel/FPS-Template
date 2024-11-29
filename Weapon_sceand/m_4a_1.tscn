@@ -1,7 +1,7 @@
 [gd_scene load_steps=73 format=4 uid="uid://dop7bg7p1skw1"]
 
 [ext_resource type="ArrayMesh" path="res://Resource/weapons/m4a111.tres" id="1_tpcw8"]
-[ext_resource type="Material" uid="uid://b8u2xilgen5be" path="res://Resource/weapons/Weapon_texture.tres" id="2_uw18v"]
+[ext_resource type="Material" uid="uid://b8u2xilgen5be" path="res://Resource/weaponsResources/Weapon_texture.tres" id="2_uw18v"]
 [ext_resource type="Material" uid="uid://byx4vxopogblr" path="res://Resource/handtextuyre/hand.tres" id="3_2uuvt"]
 [ext_resource type="Animation" uid="uid://c6q66cxkoxquu" path="res://pull_up.res" id="4_v2f5n"]
 

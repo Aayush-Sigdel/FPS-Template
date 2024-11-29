@@ -71,7 +71,7 @@ void fragment() {
 	vec2 custom_UV = (UV2 + 1.0 / float(i_uv2_sides)) * (float(i_uv2_sides) / float(i_uv2_sides + 2));
 	vec4 flow_foam_noise = textureLod(i_flowmap, custom_UV, 0.0);
 	vec2 dist_pressure = textureLod(i_distmap, custom_UV, 0.0).xy;
-	
+
 	vec2 flow;
 	float foam_mask;
 	float noise_mask;
@@ -91,24 +91,24 @@ void fragment() {
 		pressure_map = 0.5;
 	}
 	flow = (flow - 0.5) * 2.0; // unpack flowmap
-	
+
 	// calculate the steepness map
 	vec3 flow_viewspace = flow.x * TANGENT + flow.y * BINORMAL;
 	vec3 up_viewspace = (VIEW_MATRIX * vec4(0.0, 1.0, 0.0, 0.0)).xyz;
 	float steepness_map = max(0.0, dot(flow_viewspace, up_viewspace)) * 8.0;
-	
+
 	float flow_force = min(flow_base + steepness_map * flow_steepness + distance_map * flow_distance + pressure_map * flow_pressure, flow_max);
 	flow *= flow_force;
-	
+
 	if(mode == FLOWMAP) {
 		ALBEDO = vec3((flow + 0.5) / 2.0, 0.0); // repack flowmap
-		
+
 	} else if(mode == FOAMMAP) {
 		ALBEDO = vec3(foam_mask);
-		
+
 	} else if(mode == NOISEMAP) {
 		ALBEDO = vec3(noise_mask);
-		
+
 	} else if(mode == FLOW_PATTERN) {
 		vec2 jump = vec2(0.24, 0.2083333);
 		float time = TIME * flow_speed + flow_foam_noise.a;
@@ -117,11 +117,11 @@ void fragment() {
 
 		vec3 pattern_a = texture(debug_pattern, flow_uvA.xy).rgb;
 		vec3 pattern_b = texture(debug_pattern, flow_uvB.xy).rgb;
-		
+
 		vec3 pattern = pattern_a * flow_uvA.z + pattern_b * flow_uvB.z;
-		
+
 		ALBEDO = pattern;
-		
+
 	} else if(mode == FLOW_ARROWS) {
 		vec2 tiled_UV_raw = UV * uv_scale.xy * 10.0;
 		vec2 tiled_UV = fract(tiled_UV_raw) - 0.5;
@@ -132,13 +132,13 @@ void fragment() {
 		vec2 new_uv = rotation_mat * tiled_UV + 0.5;
 		float lod = mip_map_level(tiled_UV_raw * vec2(textureSize(debug_arrow, 0)));
 		ALBEDO = textureLod(debug_arrow, new_uv, lod).rgb;
-		
+
 	} else if(mode == FLOW_FORCE) {
 		float gradient = clamp(mix(0.0, 1.0, flow_force / flow_max), 0.0, 1.0);
 		ALBEDO = grayscale_to_gradient(gradient);
-		
+
 	} else if(mode == FOAM_MIX) {
-		
+
 		vec2 jump1 = vec2(0.24, 0.2083333);
 		vec2 jump2 = vec2(0.20, 0.25);
 		float time = TIME * flow_speed + flow_foam_noise.a;
@@ -146,33 +146,33 @@ void fragment() {
 		vec3 flow_uvB = FlowUVW(UV, flow, jump1, uv_scale, time, true);
 		vec3 flowx2_uvA = FlowUVW(UV, flow, jump2, uv_scale * 2.0, time, false);
 		vec3 flowx2_uvB = FlowUVW(UV, flow, jump2, uv_scale * 2.0, time, true);
-		
+
 		vec3 water_a = texture(normal_bump_texture, flow_uvA.xy).rgb;
 		vec3 water_b = texture(normal_bump_texture, flow_uvB.xy).rgb;
 		vec3 waterx2_a = texture(normal_bump_texture, flowx2_uvA.xy).rgb;
 		vec3 waterx2_b = texture(normal_bump_texture, flowx2_uvB.xy).rgb;
 		vec3 water = water_a * flow_uvA.z + water_b * flow_uvB.z;
 		vec3 waterx2 = waterx2_a * flowx2_uvA.z + waterx2_b * flowx2_uvB.z;
-		
+
 		float water_foamFBM = water.b; // LOD1
 		water_foamFBM *= waterx2.b * 2.0; // LOD0 - add second level of detail
 		float foam_randomness = texture(i_texture_foam_noise, UV * uv_scale.xy).r;
 		foam_mask += steepness_map * foam_randomness * foam_steepness;
 		foam_mask = clamp(foam_mask, 0.0, 1.0);
-		
+
 		water_foamFBM = clamp((water_foamFBM * foam_amount) - (0.5 / foam_amount), 0.0, 1.0);
-		
+
 		float foam_smooth = clamp(water_foamFBM * foam_mask, 0.0, 1.0);
 		float foam_sharp = clamp(water_foamFBM - (1.0 - foam_mask), 0.0, 1.0);
 		float combined_foam = mix(foam_sharp, foam_smooth, foam_smoothness);
-		
+
 		ALBEDO = vec3(combined_foam);
-		
+
 	} else if(mode == DISTANCEMAP) {
 		ALBEDO = vec3(dist_pressure.r);
-		
+
 	} else if(mode == PRESSUREMAP) {
 		ALBEDO = vec3(dist_pressure.g);
-		
+
 	}
 }

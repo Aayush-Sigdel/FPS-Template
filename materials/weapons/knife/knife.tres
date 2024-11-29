@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Weapons_resources" load_steps=3 format=3 uid="uid://clr4as8pmwtk0"]
 
-[ext_resource type="Script" path="res://Resource/weapons/weapon_resources.gd" id="1_f37my"]
+[ext_resource type="Script" path="res://Resource/weaponsResources/weapon_resources.gd" id="1_f37my"]
 [ext_resource type="ArrayMesh" uid="uid://dok2q8qo0t22h" path="res://materials/weapons/knife/knife_mesh.tres" id="1_mtqn5"]
 
 [resource]

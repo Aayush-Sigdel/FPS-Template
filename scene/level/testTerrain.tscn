@@ -1,0 +1,138 @@
+[gd_scene load_steps=29 format=3 uid="uid://c4sb7dyfetsgl"]
+
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="1_sc71f"]
+[ext_resource type="Resource" path="res://environment/terrain/data.hterrain" id="2_p6hat"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="2_wfigg"]
+[ext_resource type="Shader" path="res://Resource/Shaders/outline.gdshader" id="3_u4cab"]
+[ext_resource type="Texture2D" uid="uid://kho8uwc2v1uy" path="res://environment/terrain/grass/testTerrain_slot0_albedo_bump.png" id="4_2hc5u"]
+[ext_resource type="Texture2D" uid="uid://ceqtoky3sae7s" path="res://Assets/Nature/grass/sandyground1_Base_Color.png" id="5_f3138"]
+[ext_resource type="Texture2D" uid="uid://cj00365fpcnm2" path="res://Assets/Nature/grass/asphalt_0004_color_2k.jpg" id="6_lwrat"]
+[ext_resource type="Texture2D" uid="uid://b312w4c62anx4" path="res://environment/terrain/grass/testTerrain_slot0_normal_roughness.png" id="6_qecfy"]
+[ext_resource type="Texture2D" uid="uid://doyxcd74irg3c" path="res://Assets/Nature/grass/sandyground1_Normal.png" id="7_o1iay"]
+[ext_resource type="Texture2D" uid="uid://b0it6ujx213ex" path="res://Assets/Nature/grass/asphalt_0004_normal_directx_2k.png" id="9_acukx"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/scatter.gd" id="11_m6mq6"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/stack/modifier_stack.gd" id="12_d77di"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/base_modifier.gd" id="13_e2tud"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/create_inside_random.gd" id="14_ylwv7"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/randomize_transforms.gd" id="15_brwq0"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/relax.gd" id="16_rggmi"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/project_on_geometry.gd" id="17_t1qox"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/scatter_item.gd" id="18_mtpct"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/scatter_shape.gd" id="19_4uklj"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/shapes/box_shape.gd" id="20_bcagl"]
+
+[sub_resource type="Resource" id="Resource_1ftpt"]
+script = ExtResource("2_wfigg")
+mode = 0
+textures = [[ExtResource("4_2hc5u"), ExtResource("5_f3138"), ExtResource("6_lwrat")], [ExtResource("6_qecfy"), ExtResource("7_o1iay"), ExtResource("9_acukx")]]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_17p0h"]
+data = PackedVector3Array(1000, 0, 1000, -1000, 0, 1000, 1000, 0, -1000, -1000, 0, 1000, -1000, 0, -1000, 1000, 0, -1000)
+
+[sub_resource type="Resource" id="Resource_5mwm8"]
+script = ExtResource("14_ylwv7")
+amount = 75
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = true
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_3q7tp"]
+script = ExtResource("15_brwq0")
+position = Vector3(0.15, 0.15, 0.15)
+rotation = Vector3(20, 360, 20)
+scale = Vector3(0.1, 0.1, 0.1)
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = false
+reference_frame = 2
+
+[sub_resource type="Resource" id="Resource_ux4cv"]
+script = ExtResource("16_rggmi")
+iterations = 3
+offset_step = 0.2
+consecutive_step_multiplier = 0.75
+use_computeshader = true
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = true
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_hmlbl"]
+script = ExtResource("17_t1qox")
+ray_direction = Vector3(0, -1, 0)
+ray_length = 5.0
+ray_offset = 5.0
+remove_points_on_miss = false
+align_with_collision_normal = false
+max_slope = 90.0
+collision_mask = 1
+exclude_mask = 0
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = false
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_q36ol"]
+script = ExtResource("12_d77di")
+stack = Array[ExtResource("13_e2tud")]([SubResource("Resource_5mwm8"), SubResource("Resource_3q7tp"), SubResource("Resource_ux4cv"), SubResource("Resource_hmlbl")])
+
+[sub_resource type="Resource" id="Resource_yy3b4"]
+script = ExtResource("20_bcagl")
+size = Vector3(1, 1, 1)
+
+[node name="terrain" type="Node3D"]
+
+[node name="HTerrain" type="Node3D" parent="."]
+script = ExtResource("1_sc71f")
+ambient_wind = 1.0
+centered = true
+_terrain_data = ExtResource("2_p6hat")
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4"
+custom_shader = ExtResource("3_u4cab")
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_1ftpt")
+render_layers = 1
+cast_shadow = 1
+shader_params/u_ground_uv_scale_per_texture = Vector4(2, 0, 0, 0)
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = true
+shader_params/u_tile_reduction = Vector4(4, 0, 0, 0)
+shader_params/u_globalmap_blend_start = 2.0
+shader_params/u_globalmap_blend_distance = 0.0
+shader_params/u_colormap_opacity_per_texture = Vector4(1, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -330.254, 0)
+visible = false
+shape = SubResource("ConcavePolygonShape3D_17p0h")
+
+[node name="ProtonScatter" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.377963, 0)
+script = ExtResource("11_m6mq6")
+modifier_stack = SubResource("Resource_q36ol")
+Performance/use_chunks = true
+Performance/chunk_dimensions = Vector3(15, 15, 15)
+
+[node name="ScatterItem" type="Node3D" parent="ProtonScatter"]
+script = ExtResource("18_mtpct")
+path = "res://Assets/Nature/FBX/BirchTree_2.fbx"
+
+[node name="ScatterShape" type="Node3D" parent="ProtonScatter"]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 0)
+script = ExtResource("19_4uklj")
+shape = SubResource("Resource_yy3b4")

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Weapons_resources" load_steps=3 format=3 uid="uid://co3005f67y74d"]
 
-[ext_resource type="ArrayMesh" uid="uid://c4t5xk5trctmj" path="res://materials/weapons/G15/Glock_mesh.tres" id="1_5ni7a"]
-[ext_resource type="Script" path="res://Resource/weapons/weapon_resources.gd" id="1_6p1dd"]
+[ext_resource type="Script" path="res://Resource/weaponsResources/weapon_resources.gd" id="1_6p1dd"]
+[ext_resource type="ArrayMesh" uid="uid://c5mi0vscgmrc2" path="res://materials/weapons/G15/g15handrig.tres" id="1_xjie0"]
 
 [resource]
 script = ExtResource("1_6p1dd")
@@ -11,9 +11,9 @@ Reserver_ammo = 100
 Magazine = 20
 Max_ammo = 100
 Auto_fire = true
-mesh = ExtResource("1_5ni7a")
-weapon_position = Vector3(0.242, -0.2, -0.4)
-weapon_rotation = Vector3(8, 8, 5)
+mesh = ExtResource("1_xjie0")
+weapon_position = Vector3(0.412111, -0.17147, -1.51618)
+weapon_rotation = Vector3(-4.1, 98.4, 6.3)
 Swaymin = Vector2(-20, -20)
 Swaymax = Vector2(20, 20)
 SwaySpeedPosition = 0.07
