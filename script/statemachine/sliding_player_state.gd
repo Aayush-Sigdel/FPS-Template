@@ -23,6 +23,8 @@ func update(delta):
 	#if Input.is_action_just_pressed("jump") and PLAYER.is_on_floor():
 		#TILT_AMOUNT = 0.0
 		#transition.emit("JumpPlayerState")
+	if Input.is_action_just_pressed("shoot"):
+		PLAYER.weapon._attack()
 
 	if PLAYER.velocity.y < -2.0 and !PLAYER.is_on_floor():
 		transition.emit("FallingPlayerState")

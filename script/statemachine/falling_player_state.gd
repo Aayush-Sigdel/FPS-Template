@@ -18,3 +18,6 @@ func update(delta):
 
 	if Input.is_action_just_pressed("crouch") and PLAYER.is_on_floor():
 		transition.emit("CrouchPlayerState")
+		
+	if Input.is_action_just_pressed("shoot"):
+		PLAYER.weapon._attack()

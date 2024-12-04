@@ -1,15 +1,18 @@
+@tool
+
 class_name Player  extends CharacterBody3D
 
 @onready var crouch_shape_cast_3d: ShapeCast3D = $ShapeCast3D
+
 @onready var arm: Node3D = $arm
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var camera_3d: Camera3D = $arm/Camera3D
+
+
 @onready var weapon_camera: Camera3D = $arm/Camera3D/SubViewportContainer/SubViewport/weaponCamera
 
-@onready var weapon: Node3D = $arm/Camera3D/SubViewportContainer/SubViewport/weaponCamera/Weapon
-
-@onready var weapon_mesh: MeshInstance3D = $Weapon/Weapon_mesh
-
+@onready var weapon: Node3D = $arm/Camera3D/SubViewportContainer/SubViewport/weaponCamera/Recoil/Weapon
 
 var _mouse_input : bool = false
 var _rotation_input : float
@@ -53,7 +56,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _mouse_input:
 		_rotation_input = -event.relative.x * mouse_sensitivity
 		_tilt_input = -event.relative.y * mouse_sensitivity
-		
+	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("exit"):
 		get_tree().quit()
@@ -62,8 +65,7 @@ func _input(event: InputEvent) -> void:
 	
 func _physics_process(delta: float) -> void:
 	weapon_camera.global_transform = camera_3d.global_transform 
-	Global.debug.add_property("MouseRotation", mouse_rotaion, 2)
-	Global.debug.add_property("PlayerPosition",(position), 1)
+	
 
 	_update_camera(delta)
 
@@ -77,9 +79,10 @@ func update_input(SPEED : float, ACCELERATION : float, DECELERATION : float):
 	if direction:
 		velocity.x = lerp(velocity.x, direction.x * SPEED, ACCELERATION)
 		velocity.z = lerp(velocity.z, direction.z * SPEED, ACCELERATION)
+		weapon.SwayWeapon(velocity)
 	else:
 		velocity.x = move_toward(velocity.x, 0, DECELERATION)
 		velocity.z = move_toward(velocity.z, 0, DECELERATION)
-
+		weapon.SwayWeapon(velocity)
 func update_velocity():
 	move_and_slide()

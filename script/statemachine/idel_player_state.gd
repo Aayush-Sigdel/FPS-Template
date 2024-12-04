@@ -4,6 +4,7 @@ class_name IdelPlayerState extends PlayerMovementState
 @export var DECELERATION = 0.5
 @export var SPEED = 5
 
+
 func enter(_pervious_state):
 	if ANIMATION.is_playing() and ANIMATION.current_animation == "jump_end":
 		await  ANIMATION.animation_finished
@@ -27,3 +28,7 @@ func update(delta):
 
 	if PLAYER.velocity.y < -2.0 and !PLAYER.is_on_floor():
 		transition.emit("FallingPlayerState")
+		
+	if Input.is_action_just_pressed("shoot"):
+		PLAYER.weapon._attack()
+		

@@ -25,4 +25,6 @@ func update(delta):
 
 	if PLAYER.velocity.y < -2.0 and !PLAYER.is_on_floor():
 		transition.emit("FallingPlayerState")
-  
+	
+	if Input.is_action_just_pressed("shoot"):
+		PLAYER.weapon._attack()

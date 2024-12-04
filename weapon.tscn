@@ -1,0 +1,104 @@
+[gd_scene load_steps=14 format=3 uid="uid://bcexnh5lextmu"]
+
+[ext_resource type="Script" path="res://script/Iniciate_Weapon.gd" id="1_l2gff"]
+[ext_resource type="Resource" uid="uid://co3005f67y74d" path="res://materials/weapons/G15/g15.tres" id="2_og26t"]
+[ext_resource type="ArrayMesh" uid="uid://c5mi0vscgmrc2" path="res://materials/weapons/G15/g15handrig.tres" id="3_5qq7y"]
+[ext_resource type="Script" path="res://script/muzzle_flash.gd" id="4_c2vjd"]
+[ext_resource type="ArrayMesh" uid="uid://sh5yo7tpv74o" path="res://materials/weapons/bulletHole/bulletBottom.res" id="5_l6ka4"]
+[ext_resource type="Shader" path="res://Resource/Shaders/outline.gdshader" id="6_34yq3"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4yrb8"]
+emission_shape = 4
+emission_point_count = 1
+spread = 31.634
+initial_velocity_min = 2.0
+initial_velocity_max = 2.0
+gravity = Vector3(0, -10, 4)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qvrif"]
+lifetime_randomness = 0.17
+angle_min = -720.0
+angle_max = 720.0
+initial_velocity_min = 0.2
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="Gradient" id="Gradient_amllr"]
+offsets = PackedFloat32Array(0, 0.981481)
+colors = PackedColorArray(1, 0.635294, 0.101961, 1, 0, 0, 0, 1)
+metadata/_snap_count = 13
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_exu3w"]
+gradient = SubResource("Gradient_amllr")
+fill = 2
+fill_from = Vector2(0.504425, 0.513274)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u7lqd"]
+render_priority = 0
+shader = ExtResource("6_34yq3")
+shader_parameter/outline_color = Color(1, 1, 0.101961, 1)
+shader_parameter/outline_width = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_umuyq"]
+next_pass = SubResource("ShaderMaterial_u7lqd")
+transparency = 1
+blend_mode = 1
+albedo_texture = SubResource("GradientTexture2D_exu3w")
+emission_enabled = true
+emission = Color(0.760784, 0.403922, 0, 1)
+emission_energy_multiplier = 16.0
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_j46mh"]
+material = SubResource("StandardMaterial3D_umuyq")
+size = Vector2(0.05, 0.05)
+
+[node name="Weapon" type="Node3D" groups=["weapon"]]
+transform = Transform3D(-4.35451e-08, 3.8097e-09, 0.999999, 0.0871558, 0.996195, 0, -0.996195, 0.0871557, -4.37114e-08, 0, -0.1, -1.2)
+script = ExtResource("1_l2gff")
+Weapon_type = ExtResource("2_og26t")
+
+[node name="Weapon_mesh" type="MeshInstance3D" parent="." groups=["weapon"]]
+transform = Transform3D(1, 0, -1.26075e-10, 0, 1, 1.41434e-08, -6.57607e-12, -7.57836e-10, 1, 0, 0, 0)
+layers = 3
+mesh = ExtResource("3_5qq7y")
+
+[node name="MuzzleFlash" type="Node3D" parent="."]
+transform = Transform3D(0.999999, -2.23517e-08, -7.71127e-10, 3.72529e-08, 1, 5.14218e-08, -1.49078e-08, 6.69071e-09, 1, 0.195674, 0.000315174, 0.0808655)
+script = ExtResource("4_c2vjd")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="MuzzleFlash"]
+transform = Transform3D(1, -7.45058e-09, 1.5109e-08, 0, 1, -5.31717e-08, -8.81073e-12, -8.47051e-09, 1, 0, 0, 0)
+layers = 7
+light_color = Color(0.760784, 0.403922, 0, 1)
+light_indirect_energy = 16.0
+light_size = 1.0
+shadow_enabled = true
+distance_fade_enabled = true
+omni_range = 0.242
+omni_attenuation = 1.455
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="MuzzleFlash"]
+transform = Transform3D(0.393787, 0, 0.0702292, 0, 0.4, 0, -0.0702292, 0, 0.393787, -0.246165, 0, 0.0439018)
+layers = 3
+emitting = false
+amount = 1
+lifetime = 0.2
+one_shot = true
+speed_scale = 2.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_4yrb8")
+draw_passes = 2
+draw_pass_2 = ExtResource("5_l6ka4")
+
+[node name="GPUParticles3D2" type="GPUParticles3D" parent="MuzzleFlash"]
+emitting = false
+amount = 12
+lifetime = 0.01
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_qvrif")
+draw_pass_1 = SubResource("QuadMesh_j46mh")

@@ -4,6 +4,7 @@ class_name CrouchPlayerState extends PlayerMovementState
 @export var DECELERATION = 0.5
 @export var SPEED = 2.0
 @export_range(1, 6, 0.1) var SPEED_CROUCH = 4.0
+@onready var weapon: Node3D = $"../../arm/Camera3D/SubViewportContainer/SubViewport/weaponCamera/Recoil/Weapon"
 
 @onready var crouch_shape_cast_3d: ShapeCast3D = $"../../ShapeCast3D"
 var release = false
@@ -24,11 +25,16 @@ func update(delta):
 	PLAYER.update_input(SPEED,ACCELERATION,DECELERATION)
 	PLAYER.update_velocity()
 	
+	if Input.is_action_just_pressed("shoot"):
+		PLAYER.weapon._attack()
+		
 	if Input.is_action_just_released("crouch"):
 		uncrouch()
 	elif Input.is_action_pressed("crouch") == false and release == false:
 		release = true
 		uncrouch()
+		
+
 		
 func uncrouch():
 	if crouch_shape_cast_3d.is_colliding() == false and Input.is_action_just_pressed("crouch") == false:
