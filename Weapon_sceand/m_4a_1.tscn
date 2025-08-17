@@ -1,9 +1,11 @@
 [gd_scene load_steps=73 format=4 uid="uid://dop7bg7p1skw1"]
 
-[ext_resource type="ArrayMesh" path="res://Resource/weapons/m4a111.tres" id="1_tpcw8"]
 [ext_resource type="Material" uid="uid://b8u2xilgen5be" path="res://Resource/weaponsResources/Weapon_texture.tres" id="2_uw18v"]
 [ext_resource type="Material" uid="uid://byx4vxopogblr" path="res://Resource/handtextuyre/hand.tres" id="3_2uuvt"]
 [ext_resource type="Animation" uid="uid://c6q66cxkoxquu" path="res://pull_up.res" id="4_v2f5n"]
+
+[sub_resource type="Resource" id="Resource_1132o"]
+metadata/__load_path__ = "res://Resource/weapons/m4a111.tres"
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_7fuih"]
 _surfaces = [{
@@ -983,11 +985,11 @@ tracks/5/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nxipe"]
 _data = {
-"Fire": SubResource("Animation_v7lkj"),
-"RESET": SubResource("Animation_8d1tg"),
-"pull_ayay": SubResource("Animation_qtel6"),
-"pull_up": ExtResource("4_v2f5n"),
-"reload": SubResource("Animation_7nsgq")
+&"Fire": SubResource("Animation_v7lkj"),
+&"RESET": SubResource("Animation_8d1tg"),
+&"pull_ayay": SubResource("Animation_qtel6"),
+&"pull_up": ExtResource("4_v2f5n"),
+&"reload": SubResource("Animation_7nsgq")
 }
 
 [node name="m4a1" type="Node3D"]
@@ -1000,7 +1002,7 @@ transform = Transform3D(-0.0424992, -0.120844, 0.991761, 0.0747734, 0.989489, 0.
 [node name="Weapon_02" type="MeshInstance3D" parent="m4a1_rig"]
 transform = Transform3D(0.01, 0, 0, 0, 0, -0.01, 0, 0.01, 0, 0, 0, 0)
 layers = 2
-mesh = ExtResource("1_tpcw8")
+mesh = SubResource("Resource_1132o")
 skeleton = NodePath("")
 
 [node name="Weapon_02_2" type="MeshInstance3D" parent="m4a1_rig"]

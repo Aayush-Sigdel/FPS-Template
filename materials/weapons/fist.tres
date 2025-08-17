@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Weapons_resources" load_steps=3 format=3 uid="uid://c32uehqyrqi0u"]
 
 [ext_resource type="ArrayMesh" uid="uid://dok2q8qo0t22h" path="res://materials/weapons/knife/knife_mesh.tres" id="1_3mitu"]
-[ext_resource type="Script" path="res://Resource/weaponsResources/weapon_resources.gd" id="1_kgf2v"]
+[ext_resource type="Script" uid="uid://b0d6ixjupv3ew" path="res://Resource/weaponsResources/weapon_resources.gd" id="1_kgf2v"]
 
 [resource]
 script = ExtResource("1_kgf2v")

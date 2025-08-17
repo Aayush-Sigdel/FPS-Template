@@ -1,19 +1,19 @@
 [gd_scene load_steps=27 format=3 uid="uid://crhmet3kdsv4n"]
 
-[ext_resource type="Script" path="res://script/playe_controller.gd" id="1_pjymv"]
-[ext_resource type="Script" path="res://script/Retical.gd" id="2_8igmx"]
-[ext_resource type="Script" path="res://script/recoil.gd" id="2_tlrk8"]
+[ext_resource type="Script" uid="uid://ciiaixrhtiyy4" path="res://script/playe_controller.gd" id="1_pjymv"]
+[ext_resource type="Script" uid="uid://ciig1snxufu3w" path="res://script/Retical.gd" id="2_8igmx"]
+[ext_resource type="Script" uid="uid://by2xr3w83tudc" path="res://script/recoil.gd" id="2_tlrk8"]
 [ext_resource type="Theme" uid="uid://vhvelkdbyvym" path="res://environment/UI/Debug.tres" id="3_33ndc"]
-[ext_resource type="Script" path="res://script/statemachine/state_machine.gd" id="3_eyfo1"]
+[ext_resource type="Script" uid="uid://flmi80r4bfk2" path="res://script/statemachine/state_machine.gd" id="3_eyfo1"]
 [ext_resource type="PackedScene" uid="uid://bcexnh5lextmu" path="res://weapon.tscn" id="3_jp21r"]
-[ext_resource type="Script" path="res://script/statemachine/idel_player_state.gd" id="4_edxut"]
-[ext_resource type="Script" path="res://script/debug_panal.gd" id="4_w1ep5"]
-[ext_resource type="Script" path="res://script/statemachine/walking_player_state.gd" id="5_04nna"]
-[ext_resource type="Script" path="res://script/statemachine/Sprint_player_state.gd" id="8_jc00j"]
-[ext_resource type="Script" path="res://script/statemachine/crouch_player_state.gd" id="9_p2a1m"]
-[ext_resource type="Script" path="res://script/statemachine/sliding_player_state.gd" id="10_cik1r"]
-[ext_resource type="Script" path="res://script/statemachine/jump_player_state.gd" id="11_7ynut"]
-[ext_resource type="Script" path="res://script/statemachine/falling_player_state.gd" id="12_d682v"]
+[ext_resource type="Script" uid="uid://dn8lexc1nup85" path="res://script/statemachine/idel_player_state.gd" id="4_edxut"]
+[ext_resource type="Script" uid="uid://b6kl1c4lh7wy8" path="res://script/debug_panal.gd" id="4_w1ep5"]
+[ext_resource type="Script" uid="uid://3xiywx3xm0xm" path="res://script/statemachine/walking_player_state.gd" id="5_04nna"]
+[ext_resource type="Script" uid="uid://bx7ruhptlqh51" path="res://script/statemachine/Sprint_player_state.gd" id="8_jc00j"]
+[ext_resource type="Script" uid="uid://4y4qn07kmfll" path="res://script/statemachine/crouch_player_state.gd" id="9_p2a1m"]
+[ext_resource type="Script" uid="uid://cj81rwowqp536" path="res://script/statemachine/sliding_player_state.gd" id="10_cik1r"]
+[ext_resource type="Script" uid="uid://d51pnt18bwe6" path="res://script/statemachine/jump_player_state.gd" id="11_7ynut"]
+[ext_resource type="Script" uid="uid://dxoujrmhs5nyg" path="res://script/statemachine/falling_player_state.gd" id="12_d682v"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ffit4"]
 
@@ -531,13 +531,13 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nb7kk"]
 _data = {
-"RESET": SubResource("Animation_0lqrf"),
-"crouch": SubResource("Animation_tli1v"),
-"jump_end": SubResource("Animation_lii0c"),
-"jump_start": SubResource("Animation_epmyh"),
-"sliding": SubResource("Animation_lf42g"),
-"sprinting": SubResource("Animation_0fexv"),
-"walking": SubResource("Animation_lrymr")
+&"RESET": SubResource("Animation_0lqrf"),
+&"crouch": SubResource("Animation_tli1v"),
+&"jump_end": SubResource("Animation_lii0c"),
+&"jump_start": SubResource("Animation_epmyh"),
+&"sliding": SubResource("Animation_lf42g"),
+&"sprinting": SubResource("Animation_0fexv"),
+&"walking": SubResource("Animation_lrymr")
 }
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5y70i"]
@@ -595,7 +595,7 @@ transform = Transform3D(-4.35451e-08, 3.8097e-09, 0.999999, 0.0871558, 0.996195,
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_nb7kk")
+&"": SubResource("AnimationLibrary_nb7kk")
 }
 
 [node name="ShapeCast3D" type="ShapeCast3D" parent="."]
